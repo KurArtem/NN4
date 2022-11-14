@@ -11,7 +11,7 @@ class PANetwork:
                  l_neurons,
                  out_layer_size,
                  image_size,
-                 lambd = 0.1,
+                 lambd=0.1,
                  dbg=False):
         self.MAX_SIZE = 2048
         if layers * l_neurons > self.MAX_SIZE:
@@ -154,13 +154,11 @@ class PANetwork:
         return 1 - (self.__is_activated(weights, outputs, 0)) ** 2
 
     def __initialize_weights(self):
-        # b = 0.7 * pow((self.__layers - 1) * self.__layer_neurons, (1.0 / ((self.image_size ** 2) * 3)))
         layer = list()
         for neu_id in range(self.ol_size):
             neuron = list()
             for w_id in range(self.__layer_neurons + 1):
                 neuron.append(rnd.randint(self.w_bounds[0], self.w_bounds[1]) / 2)
-            # neuron = self.__scale_weights(neuron)
             layer.append(neuron)
 
         self.weights.append(layer)
@@ -171,7 +169,6 @@ class PANetwork:
                 neuron = list()
                 for w_id in range(self.__layer_neurons + 1):
                     neuron.append(rnd.randint(self.w_bounds[0], self.w_bounds[1]) / 2)
-                # neuron = self.__scale_weights(neuron)
                 layer.append(neuron)
 
             self.weights.append(layer)
@@ -181,25 +178,7 @@ class PANetwork:
             neuron = list()
             for w_id in range((self.image_size ** 2) * 3 + 1):
                 neuron.append(rnd.randint(self.w_bounds[0], self.w_bounds[1]) / 2)
-            # neuron = self.__scale_weights(neuron)
             layer.append(neuron)
 
         self.weights.append(layer)
-
-        self.breakpoint_shit = ""
-
-    def __scale_weights(self, weights):
-        res = 0
-        for w_id in range(len(weights)):
-            res += weights[w_id] ** 2
-
-        res *= self.lambd / 2
-        ''' divider = 0
-        for w_id in range(len(weights)):
-            divider += weights[w_id] ** 2
-        divider = math.sqrt(divider)
-
-        for w_id in range(len(weights)):
-            weights[w_id] = b * weights[w_id] / divider '''
-        return weights
 
